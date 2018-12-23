@@ -19,7 +19,6 @@ module Control.Concurrent.SVar
   , putSVar, readSVar
   ) where
 
-
 import Control.Concurrent.MVar
   ( MVar, newEmptyMVar, newMVar
   , putMVar, takeMVar
@@ -35,6 +34,8 @@ newEmptySVar :: IO (SVar a)
 newEmptySVar = do
   lock <- newEmptyMVar
   var <- newMVar (undefined, Just lock)
+  -- ^ lock the 'undefined' value,
+  -- and notify the writer to unlock the next value written
   pure (SVar var lock)
 
 -- | Create an 'SVar' which contains the supplied value.
@@ -42,6 +43,7 @@ newSVar :: a -> IO (SVar a)
 newSVar value = do
   lock <- newMVar ()
   var <- newMVar (value, Nothing)
+  -- ^ keep the value unlocked for reading
   pure (SVar var lock)
 
 -- | Put a value into an 'SVar'.
@@ -50,6 +52,7 @@ putSVar :: SVar a -> a -> IO ()
 putSVar (SVar var _) value = do
   (_, mlock) <- takeMVar var
   putMVar var (value, Nothing)
+
   mapM_ (\lock -> putMVar lock ()) mlock
 
 -- | Read a value from an 'SVar'.
@@ -57,6 +60,10 @@ putSVar (SVar var _) value = do
 readSVar :: SVar a -> IO a
 readSVar (SVar var lock) = do
   takeMVar lock
+
   (value, _) <- takeMVar var
   putMVar var (value, Just lock)
+  -- ^ keep the value unchanged,
+  -- and notify the writer to unlock the next value written
+
   pure value
