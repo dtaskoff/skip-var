@@ -9,6 +9,7 @@ stability:           "experimental"
 copyright:           "2018 Daniel Taskoff"
 
 extra-source-files:
+- CHANGELOG.md
 - README.md
 
 synopsis:            Skip variables
