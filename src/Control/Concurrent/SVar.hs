@@ -42,8 +42,8 @@ newEmptySVar = do
 newSVar :: a -> IO (SVar a)
 newSVar value = do
   lock <- newMVar ()
-  var <- newMVar (value, Nothing)
   -- ^ keep the value unlocked for reading
+  var <- newMVar (value, Nothing)
   pure (SVar var lock)
 
 -- | Put a value into an 'SVar'.
