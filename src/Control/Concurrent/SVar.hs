@@ -62,8 +62,10 @@ readSVar (SVar var lock) = do
   takeMVar lock
 
   (value, _) <- takeMVar var
-  putMVar var (value, Just lock)
-  -- ^ keep the value unchanged,
+  putMVar var (error "attempt to consume a value more than once", Just lock)
+  -- ^ drop the reference to the value,
   -- and notify the writer to unlock the next value written
+  -- Note: the error will never be evaluated, because 'putSVar' will discard it,
+  -- and a second 'readSVar' will block until a new value has been written
 
   pure value
