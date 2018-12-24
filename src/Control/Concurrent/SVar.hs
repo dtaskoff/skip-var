@@ -33,9 +33,11 @@ data SVar a = SVar (MVar (a, Maybe (MVar ()))) (MVar ())
 newEmptySVar :: IO (SVar a)
 newEmptySVar = do
   lock <- newEmptyMVar
-  var <- newMVar (undefined, Just lock)
-  -- ^ lock the 'undefined' value,
+  var <- newMVar (error "attempt to read from an empty SVar", Just lock)
+  -- ^ lock the 'error' value,
   -- and notify the writer to unlock the next value written
+  -- Note: the error will never be evaluated, because 'putSVar' will discard it,
+  -- and a 'readSVar' will block until a new value has been written
   pure (SVar var lock)
 
 -- | Create an 'SVar' which contains the supplied value.
