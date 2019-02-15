@@ -6,7 +6,7 @@ license-file:        LICENSE
 author:              "Daniel Taskoff <daniel.taskoff@gmail.com>, Georgi Lyubenov <godzbanebane@gmail.com>"
 maintainer:          "Daniel Taskoff <daniel.taskoff@gmail.com>, Georgi Lyubenov <godzbanebane@gmail.com>"
 stability:           "experimental"
-copyright:           "2018 Daniel Taskoff"
+copyright:           "2018 (c) Daniel Taskoff, 2018 (c) Georgi Lyubenov"
 
 extra-source-files:
 - CHANGELOG.md
