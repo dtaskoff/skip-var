@@ -1,6 +1,6 @@
 name:                skip-var
 version:             0.1.1.0
-github:              "leohaskell/skip-var"
+github:              "dtaskoff/skip-var"
 license:             MIT
 license-file:        LICENSE
 author:              "Daniel Taskoff <daniel.taskoff@gmail.com>, Georgi Lyubenov <godzbanebane@gmail.com>"
@@ -15,7 +15,7 @@ extra-source-files:
 synopsis:            Skip variables
 category:            Concurrency
 
-description:         Please see the README on GitHub at <https://github.com/leohaskell/skip-var#readme>
+description:         Please see the README on GitHub at <https://github.com/dtaskoff/skip-var#readme>
 
 dependencies:
 - base >= 4.7 && < 5
